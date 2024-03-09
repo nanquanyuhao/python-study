@@ -1,0 +1,16 @@
+# a_list = [
+#     [1, 10], 
+#     [2, 20], 
+#     [3, 30], 
+#     [4, 40]
+#     ]
+
+# for i, j in a_list:
+#     print(i, j)
+
+a_list = [1, 3, 2, "abc"]
+b_list = [2, 3, 1, "bbb"]
+
+# print(list(zip(a_list, b_list)))
+
+print(list(enumerate(a_list)))
