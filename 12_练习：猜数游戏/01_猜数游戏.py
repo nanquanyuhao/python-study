@@ -10,7 +10,6 @@ import random
 
 # 先出来随机数，也就是实际的最终结果
 num = random.randint(0, 100)
-print(num)
 
 # 最终结果是猜对开始猜错
 isTrue = False
