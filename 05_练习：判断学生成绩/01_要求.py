@@ -7,22 +7,33 @@
 # 分数在 60 分以上 70 分一下，对应的等级为 D；
 # 分数低于 60 分，对应的等级为 E。
 
+def isRight(num) -> bool:
+    if not score.isdigit() :
+        return False
+    elif int(score) < 0:
+        return False
+    elif int(score) > 100:
+        return False
+    else:
+        return True
+
+# 当前的输入数字是否合规
+isTrue = False
 score = input("请输入你的分数\n")
 
-if score.isdigit() :
-    if int(score) >= 0 :
-        if int(score) <= 100 :
-            if int(score) > 90 :
-                print("等级为 A")
-            elif int(score) > 80 :
-                print("等级为 B")
-            elif int(score) > 70 :
-                print("等级为 C")
-            elif int(score) > 60 :
-                print("等级为 D")
-            else :
-                print("等级为 E")
+while not isTrue:
+
+    if isRight(score):
+        if int(score) > 90 :
+            print("等级为 A")
+        elif int(score) > 80 :
+            print("等级为 B")
+        elif int(score) > 70 :
+            print("等级为 C")
+        elif int(score) > 60 :
+            print("等级为 D")
         else :
-            print("用户的输入是不合法的，请重新输入")
-    else :
-        print("用户的输入是不合法的，请重新输入")
+            print("等级为 E")
+        isTrue = True
+    else:
+        score = input("用户的输入是不合法的，请重新输入\n")
