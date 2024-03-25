@@ -50,6 +50,10 @@ class Student(User):
     def add_course(self, course):
         self.courses.append(course)
 
+    # 个人新增的学生退课方法
+    def sub_course(self, course):
+        self.courses.remove(course)
+
 class Teacher(User):
 
     # 属性：姓名、年龄、性别、工号、是否是导员、班级列表
@@ -122,13 +126,29 @@ class Course:
         self.id_number = id_number
         self.teacher = teacher
         self.students = students
+        # 循环处理将学生放入选课信息
+        if len(self.students) > 0:
+            for i in self.students:
+                i.add_course(self)
         self.type = type
         self.number = number
-        self.student_number = len(self.students)
-        self.valid_number = self.number - self.student_number
+        # 表示当前已经选课的学生
+        # self.student_number = len(self.students)
+        # 表示课程剩余的学生容量
+        # self.valid_number = self.number - self.student_number
         Course.courses.append(self.name)
 
-    # 获取名称的方法
+    # 获取当前课程的已选学生容量
+    @property
+    def student_number(self):
+        return self.number - len(self.students)
+    
+    # 获取当前课程剩余学生容量
+    @property
+    def valid_number(self):
+        return len(self.students)
+
+    # 获取实例名称的方法
     @property
     def name(self):
         return self._name
@@ -165,8 +185,8 @@ class Course:
         if self.valid_number == 0:
             raise Exception("此课程已满，请选择其他课程")
         self.students.append(student)
-        self.valid_number -= 1
-        self.student_number += 1
+        # self.valid_number -= 1
+        # self.student_number += 1
         student.add_course(self)
         return True
         
@@ -174,8 +194,9 @@ class Course:
         if student not in self.students:
             raise Exception("此学生未报名该课程！")
         self.students.remove(student)
-        self.valid_number += 1
-        self.student_number -= 1
+        # self.valid_number += 1
+        # self.student_number -= 1        
+        student.sub_course(self)
         return True
     
     # 声明是类方法而不是对象方法
@@ -199,11 +220,13 @@ computer_1 = Cla('计算机一班', 1001, tom, [mia])
 
 # 创建课程对象
 python = Course('python', 1, jack, [mia, rose], '必修课', 6)
+mia.show_infos()
+rose.show_infos()
 java = Course('java', 2, tom, [mia, rose, lily], '选修课', 4)
 python.add_student(lily)
 python.sub_student(mia)
-python.show_infos()
 lily.show_infos()
+python.show_infos()
 print(Course.show_courseList())
 
 python.name = 'python 精讲课程'
